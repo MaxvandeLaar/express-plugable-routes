@@ -1,0 +1,14 @@
+{
+  "name": "express-plugable-routes",
+  "version": "1.0.0",
+  "description": "Load ExpressJS routes dynamic at runtime by placing them into a specified folder",
+  "main": "index.js",
+  "repository": "https://github.com/MaxvandeLaar/express-plugable-routes.git",
+  "author": "Max van de Laar <max.vandelaar@me.com>",
+  "license": "GNU Affero General Public License v3.0",
+  "private": false,
+  "dependencies": {
+    "chokidar": "^2.0.4",
+    "lokijs": "^1.5.5"
+  }
+}
