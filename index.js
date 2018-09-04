@@ -5,7 +5,7 @@ const Loki = require('lokijs');
 class ExpressPlugableRoutes {
     constructor(app, addonFolder, watchFor, opts = {}, error404 = null, errorHandler = null) {
         this.db = new Loki('ExpressPlugableRoutes');
-        this.plugins = this.db.addCollection('plugins', {indices: ['name', 'configFile']});
+        this.plugins = this.db.addCollection('plugins', {unique: ['name']});
 
         const watcher = chokidar.watch(watchFor, opts);
 
@@ -51,7 +51,13 @@ class ExpressPlugableRoutes {
         const route = require(`${addonFolder}/${config.rootFolder}/${config.main}`);
         Object.defineProperty(route, 'name', {value: config.name});
         app.use(config.path, route);
-        this.plugins.insert({name: config.name, configFile: path});
+        const plugins = this.plugins.find({name: {$eq: config.name}});
+        config.configFile = path;
+        if (plugins.length === 0){
+            this.plugins.insert(config);
+        } else {
+            this.plugins.update(config);
+        }
     }
 
     saveData(){
@@ -62,7 +68,7 @@ class ExpressPlugableRoutes {
         const plugins = this.plugins.find({configFile: {$eq: path}});
         let plugin = null;
         if (plugins.length > 0){
-           plugin = plugins[0];
+            plugin = plugins[0];
         }
         if (!plugin){
             return;
