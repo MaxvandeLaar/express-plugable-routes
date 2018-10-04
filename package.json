@@ -1,6 +1,6 @@
 {
   "name": "express-plugable-routes",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Load ExpressJS routes dynamic at runtime by placing them into a specified folder",
   "main": "index.js",
   "repository": {
