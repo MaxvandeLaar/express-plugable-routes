@@ -75,10 +75,12 @@ db.loadDatabase({}, function() {
 The bare minimum should contain:
 ```javascript
 {
-    "name": "myCustomRoutes",               // name of the module
-    "main": "index.js",                     // incoming js file to use 
-    "path": "/base-url-of-the-routes",      // base url the module is mounted on
-    "rootFolder": "myCustomRoutesFolder"    // folder path relative to the addon folder up to the main file
+    "expressPlugableRoutes": {
+        "name": "myCustomRoutes",               // name of the module
+        "main": "index.js",                     // incoming js file to use 
+        "path": "/base-url-of-the-routes",      // base url the module is mounted on
+        "rootFolder": "myCustomRoutesFolder"    // folder path relative to the addon folder up to the main file
+    }
 }
 ```
 

@@ -48,15 +48,16 @@ class ExpressPlugableRoutes {
     }
 
     register(app, config, addonFolder, path) {
-        const route = require(`${addonFolder}/${config.rootFolder}/${config.main}`);
-        Object.defineProperty(route, 'name', {value: config.name});
-        app.use(config.path, route);
-        const plugins = this.plugins.find({name: {$eq: config.name}});
-        config.configFile = path;
+        let erpConfig = config.expressPlugableRoutes;
+        const route = require(`${addonFolder}/${erpConfig.rootFolder}/${erpConfig.main ? erpConfig.main : config.main}`);
+        Object.defineProperty(route, 'name', {value: erpConfig.name ? erpConfig.name : config.name});
+        app.use(erpConfig.path, route);
+        const plugins = this.plugins.find({name: {$eq: erpConfig.name? erpConfig.name : config.name}});
+        erpConfig.configFile = path;
         if (plugins.length === 0){
-            this.plugins.insert(config);
+            this.plugins.insert(erpConfig);
         } else {
-            this.plugins.update(config);
+            this.plugins.update(erpConfig);
         }
     }
 
